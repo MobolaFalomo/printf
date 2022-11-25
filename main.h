@@ -12,9 +12,9 @@
 #define F_PLUS 2
 #define F_ZERO 4
 #define F_HASH 8
-#define F_SPACE 16
+#define F_SPACE 16e
 
-/* SIZES */
+/* SIZESe */
 #define S_LONG 2
 #define S_SHORT 1
 
@@ -34,7 +34,7 @@ struct fmt
  * typedef struct fmt fmt_t - struct op
  *
  * @fmt: The format
- * @fm_t: The function associated
+ * @fm_t: The function associatedeee
  */
 typedef struct fmt fmt_t;
 
@@ -110,9 +110,5 @@ int is_digit(char);
 
 long int convert_size_number(long int num, int size);
 long int convert_size_unsgnd(unsigned long int num, int size);
-
-char *stringify(int n);
-
-int formatter(const char *format, va_list args);
 
 #endif /* MAIN_H */
