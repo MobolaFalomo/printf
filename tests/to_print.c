@@ -2,8 +2,9 @@
 
 int main()
 {
-	int n = 469873;
+	char *s = "Snoopy";
+		/** int n = 469873; **/
 
-	_printf("Happy Birthday, %i%d\n", n, n);
+	_printf("Happy Birthday, %s\n", s);
 	return (0);
 }
