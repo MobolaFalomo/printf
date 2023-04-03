@@ -14,6 +14,8 @@ int _printf(const char *format, ...)
 	int prints, printed;
 	unsigned int x;
 
+	if (!format)
+		return (-1);
 	printed = x = 0;
 	va_start(vlist, format);
 	while (format && format[x] != '\0')

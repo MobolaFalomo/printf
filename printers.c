@@ -13,7 +13,10 @@ int print_char(va_list vlist)
 	char ch = va_arg(vlist, int);
 	unsigned int len = 0;
 
-	if (ch != '\0')
+	if (ch < 0)
+		return (-1);
+
+	if (ch)
 	{
 		write(1, &ch, 1);
 		len += 1;
