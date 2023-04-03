@@ -11,10 +11,7 @@
 int print_char(va_list vlist)
 {
 	char ch = va_arg(vlist, int);
-	unsigned int len = 0;
-
-	if (ch < 0)
-		return (-1);
+	int len = 0;
 
 	if (ch)
 	{
@@ -37,7 +34,7 @@ int print_char(va_list vlist)
 int print_str(va_list vlist)
 {
 	char *buf;
-	unsigned int len;
+	int len;
 
 	buf = va_arg(vlist, char *);
 	if (buf == NULL)

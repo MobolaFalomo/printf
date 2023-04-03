@@ -84,16 +84,13 @@ int conv_handler(va_list vlist, const char *format, unsigned int *ind)
 		{'c', print_char}, {'s', print_str}, {'%', print_cent}
 		, {'\0', 0}
 	};
-	int c, prints;
+	int c, prints = -1;
 	(*ind)++;
 
 	for (c = 0; convert[c].ch != '\0'; c++)
 	{
 		if (format[*ind] == convert[c].ch)
-		{
 			prints = convert[c].func(vlist);
-			return (prints);
-		}
 	}
-	return (-1);
+	return (prints);
 }
