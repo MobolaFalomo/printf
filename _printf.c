@@ -27,8 +27,6 @@ int _printf(const char *format, ...)
 			printed += 1;
 		} else
 		{
-			if (format[x + 1] == '\0')
-				return (-1);
 			/**
 			 *flags = get_flags(format, &x);
 			 *width = get_width(format, &x);
@@ -37,7 +35,10 @@ int _printf(const char *format, ...)
 			*/
 			prints = conv_handler(vlist, format, &x);
 			if (prints < 0)
+			{
+				va_end(vlist);
 				return (-1);
+			}
 			printed += prints;
 		}
 		x++;
