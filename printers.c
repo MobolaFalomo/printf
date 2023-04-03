@@ -18,7 +18,8 @@ int print_char(va_list vlist, char buffer[], unsigned int *buffind)
 		buffer[(*buffind)++] = ch;
 		len += 1;
 
-		print_buf(buffer, buffind);
+		if (*buffind == BUF)
+			print_buf(buffer, buffind);
 	}
 
 	return (len);
@@ -50,8 +51,6 @@ int print_str(va_list vlist, char buffer[], unsigned int *buffind)
 			print_buf(buffer, buffind);
 	}
 
-	print_buf(buffer, buffind);
-
 	return (len);
 }
 
@@ -72,7 +71,8 @@ int print_cent(va_list vlist, char buffer[], unsigned int *buffind)
 
 	buffer[(*buffind)++] = buf;
 
-	print_buf(buffer, buffind);
+	if (*buffind == BUF)
+		print_buf(buffer, buffind);
 
 	return (1);
 }
