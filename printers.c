@@ -8,18 +8,15 @@
  * -1 if unsuccessful
  */
 
-int print_char(va_list vlist, char buffer[], unsigned int *buffind)
+int print_char(va_list vlist)
 {
 	char ch = va_arg(vlist, int);
 	unsigned int len = 0;
 
 	if (ch != '\0')
 	{
-		buffer[(*buffind)++] = ch;
+		write(1, &ch, 1);
 		len += 1;
-
-		if (*buffind == BUF)
-			print_buf(buffer, buffind);
 	}
 
 	return (len);
@@ -34,7 +31,7 @@ int print_char(va_list vlist, char buffer[], unsigned int *buffind)
  * -1 if unsuccessful
  */
 
-int print_str(va_list vlist, char buffer[], unsigned int *buffind)
+int print_str(va_list vlist)
 {
 	char *buf;
 	unsigned int len;
@@ -44,12 +41,9 @@ int print_str(va_list vlist, char buffer[], unsigned int *buffind)
 		return (-1);
 
 	for (len = 0; buf[len] != '\0'; len++)
-	{
-		buffer[(*buffind)++] = buf[len];
+		;
 
-		if (*buffind == BUF)
-			print_buf(buffer, buffind);
-	}
+	write(1, &buf[0], len);
 
 	return (len);
 }
@@ -62,17 +56,14 @@ int print_str(va_list vlist, char buffer[], unsigned int *buffind)
  * Return: int representing numbeer of characters printed
  */
 
-int print_cent(va_list vlist, char buffer[], unsigned int *buffind)
+int print_cent(va_list vlist)
 {
 	char buf;
 	(void)(vlist);
 
 	buf = '%';
 
-	buffer[(*buffind)++] = buf;
-
-	if (*buffind == BUF)
-		print_buf(buffer, buffind);
+	write(1, &buf, 1);
 
 	return (1);
 }

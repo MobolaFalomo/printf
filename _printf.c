@@ -12,21 +12,16 @@ int _printf(const char *format, ...)
 	va_list vlist;
 	/* int precision, width, flags, size, */
 	int prints, printed;
-	unsigned int ind, x;
-	char buffer[BUF];
+	unsigned int x;
 
-	printed = ind = x = 0;
+	printed = x = 0;
 	va_start(vlist, format);
 	while (format && format[x] != '\0')
 	{
 
 		if (format[x] != '%')
 		{
-			buffer[ind++] = format[x];
-
-			if (ind == BUF - 1)
-				print_buf(buffer, &ind);
-
+			write(1, &format[x], 1);
 			printed += 1;
 		} else
 		{
@@ -36,7 +31,7 @@ int _printf(const char *format, ...)
 			 *precision = get_precision(format, &x);
 			 *size = get_size(format, &x);
 			*/
-			prints = conv_handler(vlist, format, &x, buffer, &ind);
+			prints = conv_handler(vlist, format, &x);
 			if (prints < 0)
 				return (-1);
 			printed += prints;
@@ -44,7 +39,6 @@ int _printf(const char *format, ...)
 		x++;
 	}
 	va_end(vlist);
-	print_buf(buffer, &ind);
 
 	return (printed);
 }
@@ -79,21 +73,20 @@ void print_buf(char buffer[], unsigned int *ind)
  * -1 if unsuccessful
  */
 
-int conv_handler(va_list vlist, const char *format, unsigned int *ind
-		 , char buffer[], unsigned int *buffind)
+int conv_handler(va_list vlist, const char *format, unsigned int *ind)
 {
 	convs convert[] = {
 		{'c', print_char}, {'s', print_str}, {'%', print_cent}
 		, {'\0', 0}
 	};
 	int c, prints;
-
 	(*ind)++;
+
 	for (c = 0; convert[c].ch != '\0'; c++)
 	{
 		if (format[*ind] == convert[c].ch)
 		{
-			prints = convert[c].func(vlist, buffer, buffind);
+			prints = convert[c].func(vlist);
 			return (prints);
 		}
 	}
