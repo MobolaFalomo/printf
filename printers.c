@@ -12,13 +12,9 @@ int print_char(va_list vlist)
 {
 	char ch = va_arg(vlist, int);
 
-	if (ch)
-	{
-		write(1, &ch, 1);
-		return (1);
-	}
+	write(1, &ch, 1);
 
-	return (0);
+	return (1);
 }
 
 
