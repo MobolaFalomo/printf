@@ -37,7 +37,7 @@ int print_str(va_list vlist)
 
 	buf = va_arg(vlist, char *);
 	if (buf == NULL)
-		return (-1);
+		buf = "(null)";
 
 	for (len = 0; buf[len] != '\0'; len++)
 		write(1, &buf[len], 1);
