@@ -11,15 +11,14 @@
 int print_char(va_list vlist)
 {
 	char ch = va_arg(vlist, int);
-	int len = 0;
 
 	if (ch)
 	{
 		write(1, &ch, 1);
-		len += 1;
+		return (1);
 	}
 
-	return (len);
+	return (0);
 }
 
 
@@ -41,9 +40,7 @@ int print_str(va_list vlist)
 		return (-1);
 
 	for (len = 0; buf[len] != '\0'; len++)
-		;
-
-	write(1, &buf[0], len);
+		write(1, &buf[len], 1);
 
 	return (len);
 }
