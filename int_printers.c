@@ -46,8 +46,8 @@ int print_int(va_list vlist)
 
 int print_binary(va_list vlist)
 {
-	int expo = 1, len = 0;
-	unsigned int n;
+	int len = 0;
+	unsigned int n, expo = 1;
 	char pr;
 
 	n = va_arg(vlist, unsigned int);
