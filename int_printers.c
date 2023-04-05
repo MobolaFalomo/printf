@@ -46,16 +46,11 @@ int print_int(va_list vlist)
 
 int print_binary(va_list vlist)
 {
-	int expo = 1, len = 0, a;
+	int expo = 1, len = 0;
 	unsigned int n;
 	char pr;
 
-	a = va_arg(vlist, int);
-
-	if (a < 0)
-		n = a * -1;
-	else
-		n = a;
+	n = va_arg(vlist, unsigned int);
 
 	while (n / expo > 1)
 	{
