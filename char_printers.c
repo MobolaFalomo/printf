@@ -28,10 +28,9 @@ int print_char(va_list vlist)
 
 int print_str(va_list vlist)
 {
-	char *buf;
 	int ind, count = 0;
+	char *buf = va_arg(vlist, char *);
 
-	buf = va_arg(vlist, char *);
 	if (buf == NULL)
 		buf = "(null)";
 
@@ -53,12 +52,10 @@ int print_str(va_list vlist)
 
 int print_cent(va_list vlist)
 {
-	char *buf;
+	char buf = '%';
 	(void)(vlist);
 
-	buf = "%%";
-
-	write(1, buf, 1);
+	write(1, &buf, 1);
 
 	return (1);
 }
