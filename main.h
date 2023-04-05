@@ -18,16 +18,9 @@
 
 typedef struct conversions
 {
-	char id;
+	char ch;
 	int (*func)(va_list vlist);
 } convs;
-
-/**
- *char get_size(const char *format, unsigned int *ind);
- *int get_precision(const char *format, unsigned int *ind);
- *int get_width(const char *format, unsigned int *ind);
- *int get_flags(const char *format, unsigned int *ind);
- */
 
 int conv_handler(va_list vlist, const char *format, unsigned int *ind);
 
@@ -39,6 +32,8 @@ int print_str(va_list vlist);
 int print_cent(va_list vlist);
 
 int print_int(va_list vlist);
+
+int print_binary(va_list vlist);
 
 void print_buf(char buffer[], unsigned int *ind);
 

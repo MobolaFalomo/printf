@@ -9,45 +9,43 @@
 
 int _printf(const char *format, ...)
 {
-	int i, j;
-	int count = 0;
-	va_list lst;
-	convs ids[] = {
-		{'c', print_char},
-		{'s', print_str},
-		{'i', print_int},
-		{'d', print_int},
-		{'%', print_cent},
-		{'\0', NULL}
-	};
+	va_list vlist;
+	/* int precision, width, flags, size, */
+	int prints, printed;
+	unsigned int x;
 
-	va_start(lst, format);
-	for (i = 0; format[i]; i++)
-		if (format[i] == '%')
+	if (!format)
+		return (-1);
+	printed = x = 0;
+	va_start(vlist, format);
+	while (format && format[x] != '\0')
+	{
+
+		if (format[x] != '%')
 		{
-			i++;
-			for (; format[i] != '\0'; i++)
+			write(1, &format[x], 1);
+			printed += 1;
+		} else
+		{
+			/**
+			 *flags = get_flags(format, &x);
+			 *width = get_width(format, &x);
+			 *precision = get_precision(format, &x);
+			 *size = get_size(format, &x);
+			*/
+			prints = conv_handler(vlist, format, &x);
+			if (prints < 0)
 			{
-				for (j = 0; ids[j].id != '\0'; j++)
-					if (format[i] == ids[j].id)
-					{
-						count += ids[j].func(lst);
-						break;
-					}
-				if (ids[j].id)
-					break;
-			}
-			if (format[i] == '\0')
+				va_end(vlist);
 				return (-1);
+			}
+			printed += prints;
 		}
-		else
-		{
-			write(1, &format[i], 1);
-			count += 1;
-		}
+		x++;
+	}
+	va_end(vlist);
 
-	va_end(lst);
-	return (count);
+	return (printed);
 }
 
 
@@ -84,27 +82,29 @@ int conv_handler(va_list vlist, const char *format, unsigned int *ind)
 {
 	convs convert[] = {
 		{'c', print_char}, {'s', print_str}, {'%', print_cent},
-		{'d', print_int}, {'i', print_int}, {'\0', 0}
+		{'d', print_int}, {'i', print_int}, {'b', print_binary},
+		{'\0', 0}
 	};
 	int c, prints = -1;
-
 	(*ind)++;
+
 	if (format[*ind] == '\0')
 		return (-1);
 
-	for (c = 0; convert[c].id != '\0'; c++)
+	for (c = 0; convert[c].ch != '\0'; c++)
 	{
-		if (format[*ind] == convert[c].id)
+		if (format[*ind] == convert[c].ch)
 		{
 			prints = convert[c].func(vlist);
 			break;
 		}
 	}
 
-	if (!convert[c].id)
+	if (!convert[c].ch)
 	{
+		prints = print_cent(vlist);
 		write(1, &format[*ind], 1);
-		prints *= -1;
+		prints += 1;
 	}
 	return (prints);
 }
