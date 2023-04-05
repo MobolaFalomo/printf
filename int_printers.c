@@ -46,27 +46,24 @@ int print_int(va_list vlist)
 
 int print_binary(va_list vlist)
 {
-	int expo = 1, len = 0, digits = 1, max;
+	int expo = 1, len = 0, a;
 	unsigned int n;
 	char pr;
 
-	n = va_arg(vlist, unsigned int);
+	a = va_arg(vlist, int);
+
+	if (a < 0)
+		n = a * -1;
+	else
+		n = a;
 
 	while (n / expo > 1)
 	{
 		expo *= 2;
-		digits++;
 	}
 
 	while (expo != 0)
 	{
-		max = digits - len;
-		if (max && max % 8 == 0)
-		{
-			pr = ' ';
-			len += write(1, &pr, 1);
-		}
-
 		pr = n / expo + '0';
 		len = len + write(1, &pr, 1);
 		n = n % expo;
