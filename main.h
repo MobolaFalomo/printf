@@ -18,7 +18,7 @@
 
 typedef struct conversions
 {
-	char ch;
+	char id;
 	int (*func)(va_list vlist);
 } convs;
 
