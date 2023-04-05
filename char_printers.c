@@ -51,12 +51,12 @@ int print_str(va_list vlist)
 
 int print_cent(va_list vlist)
 {
-	char buf;
+	char *buf;
 	(void)(vlist);
 
-	buf = '%';
+	buf = "%%";
 
-	write(1, &buf, 1);
+	write(1, buf, 1);
 
 	return (1);
 }

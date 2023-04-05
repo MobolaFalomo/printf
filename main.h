@@ -38,6 +38,8 @@ int print_str(va_list vlist);
 
 int print_cent(va_list vlist);
 
+int print_int(va_list vlist);
+
 void print_buf(char buffer[], unsigned int *ind);
 
 int _printf(const char *format, ...);

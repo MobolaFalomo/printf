@@ -81,8 +81,8 @@ void print_buf(char buffer[], unsigned int *ind)
 int conv_handler(va_list vlist, const char *format, unsigned int *ind)
 {
 	convs convert[] = {
-		{'c', print_char}, {'s', print_str}, {'%', print_cent}
-		, {'\0', 0}
+		{'c', print_char}, {'s', print_str}, {'%', print_cent},
+		{'d', print_int}, {'i', print_int}, {'\0', 0}
 	};
 	int c, prints = -1;
 	(*ind)++;
