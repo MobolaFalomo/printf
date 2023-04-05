@@ -9,33 +9,29 @@
 
 int print_int(va_list vlist)
 {
-	int digits, tens = 1, num = va_arg(vlist, int), abs_num, chars;
-	char ch = '-';
+	int a, expo = 1, len = 0;
+	unsigned int n;
+	char pr;
 
-	if (num < 0)
-		abs_num = num * -1;
-	else
-		abs_num = num;
+	a = va_arg(vlist, int);
 
-	for (digits = 1; abs_num > 10; digits++, tens *= 10)
-		abs_num /= 10;
-
-	if (num < 0)
+	if (a < 0)
 	{
-		write(1, &ch, 1);
-		chars = digits + 1;
-		num *= -1;
-	} else
-		chars = digits;
-
-	for (; digits > 0; digits--)
-	{
-		ch = (num / tens) + 48;
-		num %= tens;
-		tens /= 10;
-
-		write(1, &ch, 1);
+		pr = '-';
+		len = len + write(1, &pr, 1);
+		n = a * -1;
 	}
+	else
+		n = a;
+	while (n / expo > 9)
+		expo *= 10;
 
-	return (chars);
+	while (expo != 0)
+	{
+		pr = n / expo + '0';
+		len = len + write(1, &pr, 1);
+		n = n % expo;
+		expo = expo / 10;
+	}
+	return (len);
 }
