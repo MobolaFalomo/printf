@@ -11,17 +11,17 @@
 char *getX(unsigned int n)
 {
 	char pr, *buffer = malloc(sizeof(char) * 3);
-	unsigned int expo = 1, buf, ind = 0;
+	unsigned int ind = 0;
 
-	while (n / expo > 15)
-		expo *= 16;
+	buffer[0] = n / 16;
+	buffer[1] = n % 16;
+	buffer[2] = '\0';
 
-	for (; expo != 0; expo /= 16)
+	for (ind = 0; buffer[ind] != '\0'; ind++)
 	{
-		buf = n / expo;
-		if (buf > 9)
+		if (buffer[ind] > 9)
 		{
-			switch (buf - 9)
+			switch (buffer[ind] - 9)
 			{
 			case 1:
 				pr = 'A';
@@ -43,10 +43,9 @@ char *getX(unsigned int n)
 				break;
 			}
 		} else
-			pr = buf + '0';
-		buffer[ind++] = pr;
-		n = n % expo;
+			pr = buffer[ind] + '0';
+		buffer[ind] = pr;
 	}
-	buffer[ind] = '\0';
+
 	return (buffer);
 }
