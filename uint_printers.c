@@ -2,12 +2,15 @@
 
 /**
  * print_octal - print octal of unsigned int argument
+ *
  * @vlist: variadic list of arguments
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
  *
  * Return: int representing number of chars printed
  */
 
-int print_octal(va_list vlist)
+int print_octal(va_list vlist, char buffer[], unsigned int *buffind)
 {
 	int len = 0;
 	unsigned int n, expo = 1;
@@ -21,7 +24,7 @@ int print_octal(va_list vlist)
 	while (expo != 0)
 	{
 		pr = n / expo + '0';
-		len = len + write(1, &pr, 1);
+		len = len + buff_handler(pr, buffer, buffind);
 		n = n % expo;
 		expo = expo / 8;
 	}
@@ -31,12 +34,15 @@ int print_octal(va_list vlist)
 
 /**
  * print_dec - print dec of unsigned int argument
+ *
  * @vlist: variadic list of arguments
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
  *
  * Return: int representing number of chars printed
  */
 
-int print_dec(va_list vlist)
+int print_dec(va_list vlist, char buffer[], unsigned int *buffind)
 {
 	int len = 0;
 	unsigned int n, expo = 1;
@@ -50,7 +56,7 @@ int print_dec(va_list vlist)
 	while (expo != 0)
 	{
 		pr = n / expo + '0';
-		len = len + write(1, &pr, 1);
+		len = len + buff_handler(pr, buffer, buffind);
 		n = n % expo;
 		expo = expo / 10;
 	}
@@ -60,12 +66,15 @@ int print_dec(va_list vlist)
 
 /**
  * print_x - print hex of unsigned int argument
+ *
  * @vlist: variadic list of arguments
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
  *
  * Return: int representing number of chars printed
  */
 
-int print_x(va_list vlist)
+int print_x(va_list vlist, char buffer[], unsigned int *buffind)
 {
 	int len = 0;
 	char pr;
@@ -102,7 +111,7 @@ int print_x(va_list vlist)
 			}
 		} else
 			pr = buf + '0';
-		len = len + write(1, &pr, 1);
+		len = len + buff_handler(pr, buffer, buffind);
 		n = n % expo;
 	}
 	return (len);
@@ -111,12 +120,15 @@ int print_x(va_list vlist)
 
 /**
  * print_X - print hex of unsigned int argument
+ *
  * @vlist: variadic list of arguments
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
  *
  * Return: int representing number of chars printed
  */
 
-int print_X(va_list vlist)
+int print_X(va_list vlist, char buffer[], unsigned int *buffind)
 {
 	int len = 0;
 	char pr;
@@ -153,7 +165,7 @@ int print_X(va_list vlist)
 			}
 		} else
 			pr = buf + '0';
-		len = len + write(1, &pr, 1);
+		len = len + buff_handler(pr, buffer, buffind);
 		n = n % expo;
 	}
 	return (len);

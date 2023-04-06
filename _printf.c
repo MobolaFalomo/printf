@@ -10,20 +10,19 @@
 int _printf(const char *format, ...)
 {
 	va_list vlist;
-	/* int precision, width, flags, size, */
-	int prints, printed;
-	unsigned int x;
+	int prints, printed = 0;
+	unsigned int x = 0, ind = 0;
+	char buffer[BUF];
 
 	if (!format)
 		return (-1);
-	printed = x = 0;
 	va_start(vlist, format);
 	while (format && format[x] != '\0')
 	{
 
 		if (format[x] != '%')
 		{
-			write(1, &format[x], 1);
+			buff_handler(format[x], buffer, &ind);
 			printed += 1;
 		} else
 		{
@@ -33,7 +32,7 @@ int _printf(const char *format, ...)
 			 *precision = get_precision(format, &x);
 			 *size = get_size(format, &x);
 			*/
-			prints = conv_handler(vlist, format, &x);
+			prints = conv_handler(vlist, format, &x, buffer, &ind);
 			if (prints < 0)
 			{
 				va_end(vlist);
@@ -45,25 +44,32 @@ int _printf(const char *format, ...)
 	}
 	va_end(vlist);
 
+	if (ind)
+		write(1, buffer, ind);
 	return (printed);
 }
 
 
 /**
- * print_buf - call write for an array of chars
+ * buff_handler - call write for an array of chars
  *
+ * @ch: char to add to buffer
  * @buffer: array of chars to be printed
  * @ind: pointer to int representing the number of bytes to be printed
  *
  * Return: void
  */
 
-void print_buf(char buffer[], unsigned int *ind)
+int buff_handler(char ch, char buffer[], unsigned int *ind)
 {
-	if (*ind > 0)
+	buffer[(*ind)++] = ch;
+	if (*ind == BUF)
+	{
 		write(1, buffer, *ind);
+		*ind = 0;
+	}
 
-	*ind = 0;
+	return (1);
 }
 
 
@@ -73,12 +79,15 @@ void print_buf(char buffer[], unsigned int *ind)
  * @vlist: va_list
  * @format: string to be formatted
  * @ind: location of conversion specifier
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
  *
  * Return: number of printed characters
  * -1 if unsuccessful
  */
 
-int conv_handler(va_list vlist, const char *format, unsigned int *ind)
+int conv_handler(va_list vlist, const char *format, unsigned int *ind
+		 , char buffer[], unsigned int *buffind)
 {
 	convs convert[] = {
 		{'c', print_char}, {'s', print_str}, {'%', print_cent},
@@ -96,15 +105,15 @@ int conv_handler(va_list vlist, const char *format, unsigned int *ind)
 	{
 		if (format[*ind] == convert[c].ch)
 		{
-			prints = convert[c].func(vlist);
+			prints = convert[c].func(vlist, buffer, buffind);
 			break;
 		}
 	}
 
 	if (!convert[c].ch)
 	{
-		prints = print_cent(vlist);
-		write(1, &format[*ind], 1);
+		prints = print_cent(vlist, buffer, buffind);
+		buff_handler(format[*ind], buffer, buffind);
 		prints += 1;
 	}
 	return (prints);

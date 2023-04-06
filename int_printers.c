@@ -2,12 +2,15 @@
 
 /**
  * print_int - prints a signed int
+ *
  * @vlist: variadic argument list
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
  *
  * Return: int representing number of chars printed
  */
 
-int print_int(va_list vlist)
+int print_int(va_list vlist, char buffer[], unsigned int *buffind)
 {
 	int a, expo = 1, len = 0;
 	unsigned int n;
@@ -18,7 +21,7 @@ int print_int(va_list vlist)
 	if (a < 0)
 	{
 		pr = '-';
-		len = len + write(1, &pr, 1);
+		len += buff_handler(pr, buffer, buffind);
 		n = a * -1;
 	}
 	else
@@ -29,7 +32,7 @@ int print_int(va_list vlist)
 	while (expo != 0)
 	{
 		pr = n / expo + '0';
-		len = len + write(1, &pr, 1);
+		len = len + buff_handler(pr, buffer, buffind);
 		n = n % expo;
 		expo = expo / 10;
 	}
@@ -39,12 +42,15 @@ int print_int(va_list vlist)
 
 /**
  * print_binary - prints an unsigned int in binary
+ *
  * @vlist: variadic argument list
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
  *
  * Return: int representing the number of chars printed
  */
 
-int print_binary(va_list vlist)
+int print_binary(va_list vlist, char buffer[], unsigned int *buffind)
 {
 	int len = 0;
 	unsigned int n, expo = 1;
@@ -53,14 +59,12 @@ int print_binary(va_list vlist)
 	n = va_arg(vlist, unsigned int);
 
 	while (n / expo > 1)
-	{
 		expo *= 2;
-	}
 
 	while (expo != 0)
 	{
 		pr = n / expo + '0';
-		len = len + write(1, &pr, 1);
+		len = len + buff_handler(pr, buffer, buffind);
 		n = n % expo;
 		expo = expo / 2;
 	}

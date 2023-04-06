@@ -2,17 +2,20 @@
 
 /**
  * print_char - prints a character
+ *
  * @vlist: va_list of args
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
  *
  * Return: int representing number of characters printed
  * -1 if unsuccessful
  */
 
-int print_char(va_list vlist)
+int print_char(va_list vlist, char buffer[], unsigned int *buffind)
 {
 	char ch = va_arg(vlist, int);
 
-	write(1, &ch, 1);
+	buff_handler(ch, buffer, buffind);
 
 	return (1);
 }
@@ -20,13 +23,16 @@ int print_char(va_list vlist)
 
 /**
  * print_str - prints a string
+ *
  * @vlist: va_list of args
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
  *
  * Return: int representing number of characters printed
  * -1 if unsuccessful
  */
 
-int print_str(va_list vlist)
+int print_str(va_list vlist, char buffer[], unsigned int *buffind)
 {
 	int ind, count = 0;
 	char *buf = va_arg(vlist, char *);
@@ -36,7 +42,7 @@ int print_str(va_list vlist)
 
 	for (ind = 0; buf[ind] != '\0'; ind++)
 	{
-		write(1, &buf[ind], 1);
+		buff_handler(buf[ind], buffer, buffind);
 		count++;
 	}
 	return (count);
@@ -45,17 +51,20 @@ int print_str(va_list vlist)
 
 /**
  * print_cent - print percent sign
+ *
  * @vlist: va_list of args
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
  *
  * Return: int representing numbeer of characters printed
  */
 
-int print_cent(va_list vlist)
+int print_cent(va_list vlist, char buffer[], unsigned int *buffind)
 {
 	char buf = '%';
 	(void)(vlist);
 
-	write(1, &buf, 1);
+	buff_handler(buf, buffer, buffind);
 
 	return (1);
 }
