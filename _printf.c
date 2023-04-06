@@ -93,7 +93,7 @@ int conv_handler(va_list vlist, const char *format, unsigned int *ind
 		{'c', print_char}, {'s', print_str}, {'%', print_cent},
 		{'d', print_int}, {'i', print_int}, {'b', print_binary},
 		{'o', print_octal}, {'u', print_dec}, {'x', print_x},
-		{'X', print_X}, {'\0', 0}
+		{'X', print_X}, {'S', print_Str}, {'\0', 0}
 	};
 	int c, prints = -1;
 	(*ind)++;

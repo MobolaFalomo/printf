@@ -68,3 +68,48 @@ int print_cent(va_list vlist, char buffer[], unsigned int *buffind)
 
 	return (1);
 }
+
+
+/**
+ * print_Str - print string with representation for non printable characters
+ *
+ * @vlist: va_list of args
+ * @buffer: pointer to local buffer
+ * @buffind: pointer to next available location in buffer
+ *
+ * Return: int representing numbeer of characters printed
+ */
+
+int print_Str(va_list vlist, char buffer[], unsigned int *buffind)
+{
+	int count = 0;
+	char *hex, *buf = va_arg(vlist, char *);
+	unsigned int indhex, ind;
+
+	if (buf == NULL)
+		buf = "(null)";
+
+	for (ind = 0; buf[ind] != '\0'; ind++)
+	{
+		if ((buf[ind] > 0 && buf[ind] < 32) || buf[ind] >= 127)
+		{
+			buff_handler('\\', buffer, buffind);
+			buff_handler('x', buffer, buffind);
+			if (buf[ind] < 16)
+				buff_handler('0', buffer, buffind);
+
+			hex = getX(buf[ind]);
+			for (indhex = 0; hex[indhex] != '\0'; indhex++)
+				buff_handler(hex[indhex], buffer, buffind);
+			free(hex);
+
+			count += 3;
+		}
+		else
+		{
+			buff_handler(buf[ind], buffer, buffind);
+			count++;
+		}
+	}
+	return (count);
+}

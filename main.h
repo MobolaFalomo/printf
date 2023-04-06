@@ -33,6 +33,8 @@ int print_str(va_list vlist, char buffer[], unsigned int *buffind);
 
 int print_cent(va_list vlist, char buffer[], unsigned int *buffind);
 
+int print_Str(va_list vlist, char buffer[], unsigned int *buffind);
+
 /* Ints */
 int print_int(va_list vlist, char buffer[], unsigned int *buffind);
 
@@ -50,5 +52,8 @@ int print_X(va_list vlist, char buffer[], unsigned int *buffind);
 int buff_handler(char ch, char buffer[], unsigned int *ind);
 
 int _printf(const char *format, ...);
+
+/* Utils */
+char *getX(unsigned int n);
 
 #endif
