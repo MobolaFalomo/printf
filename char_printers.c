@@ -91,12 +91,10 @@ int print_Str(va_list vlist, char buffer[], unsigned int *buffind)
 
 	for (ind = 0; buf[ind] != '\0'; ind++)
 	{
-		if ((buf[ind] > 0 && buf[ind] < 32) || buf[ind] == 127)
+		if ((buf[ind] > 0 && buf[ind] < 32) || buf[ind] >= 127)
 		{
 			buff_handler('\\', buffer, buffind);
 			buff_handler('x', buffer, buffind);
-			if (buf[ind] < 16)
-				buff_handler('0', buffer, buffind);
 
 			hex = getX(buf[ind]);
 			for (indhex = 0; hex[indhex] != '\0'; indhex++)
