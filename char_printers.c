@@ -95,13 +95,17 @@ int print_Str(va_list vlist, char buffer[], unsigned int *buffind)
 		{
 			hex = getX(buf[ind]);
 			if (hex == NULL)
+			{
 				return (-1);
+				free(hex);
+			}
 
 			buff_handler('\\', buffer, buffind);
 			buff_handler('x', buffer, buffind);
 			for (indhex = 0; hex[indhex] != '\0'; indhex++)
 				buff_handler(hex[indhex], buffer, buffind);
 
+			free(hex);
 			count += 3;
 		} else
 			count += buff_handler(buf[ind], buffer, buffind);
