@@ -33,7 +33,7 @@ int _printf(const char *format, ...)
 			 *size = get_size(format, &x);
 			*/
 			prints = conv_handler(vlist, format, &x, buffer, &ind);
-			if (prints < 0)
+			if (prints == -1)
 			{
 				va_end(vlist);
 				return (-1);
@@ -95,7 +95,7 @@ int conv_handler(va_list vlist, const char *format, unsigned int *ind
 		{'o', print_octal}, {'u', print_dec}, {'x', print_x},
 		{'X', print_X}, {'S', print_Str}, {'\0', 0}
 	};
-	int c, prints = -1;
+	int c, prints;
 	(*ind)++;
 
 	if (format[*ind] == '\0')
@@ -116,5 +116,6 @@ int conv_handler(va_list vlist, const char *format, unsigned int *ind
 		buff_handler(format[*ind], buffer, buffind);
 		prints += 1;
 	}
+
 	return (prints);
 }
