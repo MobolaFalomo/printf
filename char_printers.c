@@ -102,8 +102,6 @@ int print_Str(va_list vlist, char buffer[], unsigned int *buffind)
 				free(hex);
 			}
 
-			buff_handler('\\', buffer, buffind);
-			buff_handler('x', buffer, buffind);
 			for (indhex = 0; hex[indhex] != '\0'; indhex++)
 				buff_handler(hex[indhex], buffer, buffind);
 

@@ -13,7 +13,7 @@ char *getX(int n)
 	char *buffer, *hex = "0123456789ABCDEF";
 	unsigned int ind = 0, indhex;
 
-	buffer = malloc(sizeof(char) * 3);
+	buffer = malloc(sizeof(char) * 5);
 	if (buffer == NULL)
 	{
 		free(buffer);
@@ -23,10 +23,13 @@ char *getX(int n)
 	if (n < 0)
 		n = n * -1;
 
-	buffer[0] = n / 16;
-	buffer[1] = n % 16;
-	buffer[2] = '\0';
-	for (ind = 0; ind < 2; ind++)
+	buffer[0] = '\\';
+	buffer[1] = 'x';
+	buffer[2] = n / 16;
+	buffer[3] = n % 16;
+	buffer[4] = '\0';
+
+	for (ind = 2; ind < 4; ind++)
 	{
 		indhex = buffer[ind];
 		buffer[ind] = hex[indhex];
