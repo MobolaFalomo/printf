@@ -3,38 +3,26 @@
 
 /**
  * getX - get hex of unsigned int argument
+ *
  * @n: number to print as hex
+ * @buffer: buffer handling
+ * @buffind: empty buffer location
  *
  * Return: char pointer to hex of number n
  */
 
-char *getX(int n)
+int getX(char ascii_code, char buffer[], unsigned int *buffind)
 {
-	char *buffer, *hex = "0123456789ABCDEF";
-	unsigned int ind = 0, indhex;
+	char map_to[] = "0123456789ABCDEF";
 
-	buffer = malloc(sizeof(char) * 5);
-	if (buffer == NULL)
-	{
-		free(buffer);
-		return (0);
-	}
+	if (ascii_code < 0)
+		ascii_code *= -1;
 
-	if (n < 0)
-		n = n * -1;
+	buff_handler('\\', buffer, buffind);
+	buff_handler('x', buffer, buffind);
 
-	buffer[0] = '\\';
-	buffer[1] = 'x';
-	buffer[2] = n / 16;
-	buffer[3] = n % 16;
-	buffer[4] = '\0';
+	buff_handler(map_to[ascii_code / 16], buffer, buffind);
+	buff_handler(map_to[ascii_code % 16], buffer, buffind);
 
-	for (ind = 2; ind < 4; ind++)
-	{
-		indhex = buffer[ind];
-		buffer[ind] = hex[indhex];
-
-	}
-
-	return (buffer);
+	return (3);
 }

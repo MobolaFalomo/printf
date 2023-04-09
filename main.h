@@ -54,6 +54,6 @@ int buff_handler(char ch, char buffer[], unsigned int *ind);
 int _printf(const char *format, ...);
 
 /* Utils */
-char *getX(int n);
+int getX(char ch, char buffer[], unsigned int *buffind);
 
 #endif

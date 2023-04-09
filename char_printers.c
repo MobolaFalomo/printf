@@ -82,32 +82,22 @@ int print_cent(va_list vlist, char buffer[], unsigned int *buffind)
 
 int print_Str(va_list vlist, char buffer[], unsigned int *buffind)
 {
-	int count = 0;
-	unsigned int ind, indhex;
-	char *hex, *buf = va_arg(vlist, char *);
+	unsigned int i = 0;
+	int printed = 0;
+	char *str = va_arg(vlist, char *);
 
-	if (buf == NULL)
-		buf = "(null)";
+	if (str == NULL)
+		str = "(null)";
 
-	for (ind = 0; buf[ind] != '\0'; ind++)
+	while (str[i] != '\0')
 	{
-		if (buf[ind] >= 32 && buf[ind] < 127)
-			count += buff_handler(buf[ind], buffer, buffind);
+		if (str[i] > 31 && str[i] < 127)
+			printed += buff_handler(str[i], buffer, buffind);
 		else
-		{
-			hex = getX(buf[ind]);
-			if (hex == NULL)
-			{
-				return (-1);
-				free(hex);
-			}
+			printed += getX(str[i], buffer, buffind);
 
-			for (indhex = 0; hex[indhex] != '\0'; indhex++)
-				buff_handler(hex[indhex], buffer, buffind);
-
-			free(hex);
-			count += 3;
-		}
+		i++;
 	}
-	return (count);
+
+	return (printed);
 }
