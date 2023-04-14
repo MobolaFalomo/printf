@@ -92,8 +92,17 @@ int print_Str(va_list vlist, char buffer[], unsigned int *buffind)
 	while (str[i] != '\0')
 	{
 		if (str[i] > 31 && str[i] < 127)
+		{
 			printed += buff_handler(str[i], buffer, buffind);
-		else
+			if (str[i] == 92)
+			{
+				if (str[i + 1] == 'x')
+				{
+					buff_handler(str[i], buffer, buffind);
+					i++;
+				}
+			}
+		} else
 			printed += getX(str[i], buffer, buffind);
 
 		i++;
